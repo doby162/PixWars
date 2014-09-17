@@ -1,0 +1,21 @@
+TODO:
+
+streamline server CPU ussage (deleat old threads) DONE
+
+remove ping's effect on gamespeed DONE
+
+health DONE
+
+vampirism DONE
+
+add bullets DONE
+
+add collision DONE
+
+add name DONE
+
+Since "type" is going to transmit both bullets and damage, damage needs to override bullet fireing
+
+add server commands
+
+ad color choice at startup
