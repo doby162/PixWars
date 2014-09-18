@@ -14,7 +14,10 @@ public class Main{
 	static boolean outOfDate = false;
 	
 	anim pic;
-    
+	
+	boolean failedConnection = false;
+	char date = '3';
+	
     static Image dd;
     static Image dl;
     static Image dr;
@@ -71,7 +74,7 @@ public class Main{
     			try{
     	    		outputBuffer.write(bob.getStatus());
     	    		outputBuffer.flush();
-    	    		}catch(Exception e){System.out.println("oops");}
+    	    		}catch(Exception e){System.out.println("Connection lost");failedConnection = true;}
     			try{parse(inputBuffer.readLine());}catch (Exception e){}
     		}int i = 100020;
     		int j = 100021;
@@ -94,6 +97,7 @@ public class Main{
     		timeElapsed = System.currentTimeMillis();
     		int a = (int)(timeElapsed - time);
     		try{Thread.sleep(100-a);}catch(Exception e){System.out.println("Ping too high!");}//magic
+    		if(failedConnection) break;
     	}
 		
 	} //magic
@@ -169,7 +173,7 @@ public class Main{
     
     public void setUp(String arg, int num){
         frame = new keyFrame();
-        frame.setTitle("PixWars V 1.2 (press 'm' to mute)");
+        frame.setTitle("PixWars V 2.0 (press 'm' to mute)");
         frame.setSize(1280, 720);
         frame.setVisible(true);
         frame.setResizable(false);
@@ -183,15 +187,15 @@ public class Main{
         menu(arg, num);
         
     	String IP = new String("107.196.11.5");
-    	char date = '1';
     	try{
     	Socket clientSocket = new Socket(IP,1234);
 		inputBuffer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		outputBuffer = new PrintWriter(clientSocket.getOutputStream());
 		System.out.println("authenticating");
-		date = (char) inputBuffer.read();
+		//date = (char) inputBuffer.read();
+		outputBuffer.println(date);
 		}
-    	catch (Exception h){System.out.println("connection failed");bob = null;}
+    	catch (Exception h){System.out.println("connection failed, or server might be down");failedConnection = true;}
     	cd = new mp3("Go Cart.mp3");
     	cd.play();
     	
