@@ -16,7 +16,7 @@ public class hero {
 	int dir = 1;
 	int dir2 = 1;
 	
-	public void move(mainClass a){
+	public void move(keyFrame a){
 		type = 0;
 		if(coolDown > 0) coolDown--;
 		if(coolDown == 0) canFire = true; 
@@ -30,35 +30,35 @@ public class hero {
 		
 		if(dir2 == 1){
 			switch (dir){
-			case 1: {pic = mainClass.rr;break;}
-			case 2: {pic = mainClass.ru;break;}
-			case 3: {pic = mainClass.rl;break;}
-			case 4: {pic = mainClass.rd;break;}
+			case 1: {pic = Main.rr;break;}
+			case 2: {pic = Main.ru;break;}
+			case 3: {pic = Main.rl;break;}
+			case 4: {pic = Main.rd;break;}
 			}
 		}
 			
 			else if(dir2 == 2){
 				switch (dir){
-				case 1: {pic = mainClass.ur;break;}
-				case 2: {pic = mainClass.uu;break;}
-				case 3: {pic = mainClass.ul;break;}
-				case 4: {pic = mainClass.ud;break;}
+				case 1: {pic = Main.ur;break;}
+				case 2: {pic = Main.uu;break;}
+				case 3: {pic = Main.ul;break;}
+				case 4: {pic = Main.ud;break;}
 			}
 			}
 			else if(dir2 == 3){
 				switch (dir){
-				case 1: {pic = mainClass.lr;break;}
-				case 2: {pic = mainClass.lu;break;}
-				case 3: {pic = mainClass.ll;break;}
-				case 4: {pic = mainClass.ld;break;}
+				case 1: {pic = Main.lr;break;}
+				case 2: {pic = Main.lu;break;}
+				case 3: {pic = Main.ll;break;}
+				case 4: {pic = Main.ld;break;}
 		}
 			}
 			else if(dir2 == 4){
 				switch (dir){
-				case 1: {pic = mainClass.dr;break;}
-				case 2: {pic = mainClass.du;break;}
-				case 3: {pic = mainClass.dl;break;}
-				case 4: {pic = mainClass.dd;break;}
+				case 1: {pic = Main.dr;break;}
+				case 2: {pic = Main.du;break;}
+				case 3: {pic = Main.dl;break;}
+				case 4: {pic = Main.dd;break;}
 			}
 			}
 		
@@ -76,17 +76,17 @@ public class hero {
 		
 		if(canFire){
 			type = 0;
-			if(mainClass.keys[KeyEvent.VK_RIGHT]) type = 1;
-			else if(mainClass.keys[KeyEvent.VK_UP]) type = 2;
-			else if(mainClass.keys[KeyEvent.VK_LEFT]) type = 3;
-			else if(mainClass.keys[KeyEvent.VK_DOWN]) type = 4;
+			if(a.keys[KeyEvent.VK_RIGHT]) type = 1;
+			else if(a.keys[KeyEvent.VK_UP]) type = 2;
+			else if(a.keys[KeyEvent.VK_LEFT]) type = 3;
+			else if(a.keys[KeyEvent.VK_DOWN]) type = 4;
 			if(type > 0 && type < 5 && health > 0) {
 				dir = type;
 				health = health -15;
 				canFire = false;
 				coolDown = 7;
 				bullet bul = new bullet(x, y, type, true, null);
-				mainClass.bullets.add(bul);
+				Main.bullets.add(bul);
 			}
 		}
 		
@@ -102,7 +102,7 @@ public class hero {
 	}
 	public boolean bulCollide(){
 		//check for collision with shot
-		for (bullet bul: mainClass.bullets){
+		for (bullet bul: Main.bullets){
 			if(Math.sqrt((Math.pow((bul.x-x),2))+(Math.pow((bul.y-y),2))) < ((Math.sqrt(health)/2)+10) && !bul.home){
 				bul.kill = true;
 				return true;
@@ -114,11 +114,11 @@ public class hero {
 	public boolean collide(){
 		int i;
 		
-		for(i = 0; i<mainClass.others.size(); i++){
-			int xd = x-mainClass.others.get(i).x;
-			int yd = y-mainClass.others.get(i).y;
+		for(i = 0; i<Main.others.size(); i++){
+			int xd = x-Main.others.get(i).x;
+			int yd = y-Main.others.get(i).y;
 			int d = (int)Math.sqrt(Math.pow(xd, 2)+Math.pow(yd, 2));
-			if(d<((Math.sqrt(health)/2)+(Math.sqrt(mainClass.others.get(i).health)/2))) return true;
+			if(d<((Math.sqrt(health)/2)+(Math.sqrt(Main.others.get(i).health)/2))) return true;
 		}
 		if(x < 0) return true;
 		else if (x > 1280) return true;
@@ -136,6 +136,6 @@ public class hero {
 		id = z;
 		x = 25 * num;
 		y = 15 * num;
-		pic = mainClass.uu;
+		pic = Main.uu;
 	}
 }

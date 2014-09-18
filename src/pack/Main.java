@@ -1,21 +1,19 @@
 package pack;
 
-import java.applet.Applet;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
-public class mainClass extends Applet implements Runnable, KeyListener, MouseListener{
+public class Main{
 	
 	static boolean outOfDate = false;
 	
-	private Image dbImage;
-    private Graphics dbg;
+	anim pic;
     
     static Image dd;
     static Image dl;
@@ -35,21 +33,22 @@ public class mainClass extends Applet implements Runnable, KeyListener, MouseLis
     static Image uu;
     static URL url;
     
+    static keyFrame frame;
     
-    static boolean[] keys = new boolean[525];
+    
     int mousex;
     int mousey;
     Boolean hasclicked = false;
     
-    mp3 cd;
+    static mp3 cd;
     static boolean music = true;
     int mus = 0;
     
     Thread game;
-    boolean flag = true;
+    static boolean flag = true;
     
-    String name = "";
-    boolean textFlag = true;
+    static String name = "";
+    static boolean textFlag = true;
     
     BufferedReader inputBuffer;
     PrintWriter outputBuffer;
@@ -62,14 +61,12 @@ public class mainClass extends Applet implements Runnable, KeyListener, MouseLis
     
     static ether dead = null;
     
-    @Override
-	public void run() {
-    	Thread t = Thread.currentThread();
+    public void loop() {
     	double time = System.currentTimeMillis();
     	double timeElapsed = System.currentTimeMillis();
-    	while(t == game){
+    	while(true){
     		time = System.currentTimeMillis();
-    		bob.move(this);
+    		bob.move(frame);
     		if(true){
     			try{
     				bob.flag = false;
@@ -94,13 +91,13 @@ public class mainClass extends Applet implements Runnable, KeyListener, MouseLis
     			cd.play();
     			mus = 0;
     		}
-    		repaint();
+    		frame.repaint();
     		timeElapsed = System.currentTimeMillis();
     		int a = (int)(timeElapsed - time);
-    		try{Thread.sleep(100-a);}catch(Exception e){System.out.println("Ping too high!");}
+    		try{Thread.sleep(100-a);}catch(Exception e){System.out.println("Ping too high!");}//magic
     	}
 		
-	}
+	} //magic
     
     public void parse(String a){
     	String[] tokens = a.split("~");
@@ -128,7 +125,7 @@ public class mainClass extends Applet implements Runnable, KeyListener, MouseLis
     		if(flag && !bob.id.equals(tokens[i])){
     			System.out.println("new ether");
     			ether e = new ether();
-    			e.pic = mainClass.rr;
+    			e.pic = rr;
     			e.id = tokens[i];
     			e.health = new Integer(tokens[i+1]).intValue();
     			e.x = new Integer(tokens[i+2]).intValue();
@@ -138,42 +135,51 @@ public class mainClass extends Applet implements Runnable, KeyListener, MouseLis
     		}
     	}
     }
-    
-    public void paint(Graphics g){
-		 Graphics2D g2d = (Graphics2D) g;
-	     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    class anim extends JPanel{
+    	public void paintComponent(Graphics g){
+		 	Graphics2D g2d = (Graphics2D) g;
+	     	g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-	     g2d.setColor(Color.WHITE);
-	     g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+	     	g2d.setColor(Color.WHITE);
+	     	g2d.fillRect(0, 0, frame.getWidth(), frame.getHeight());
 	     
-	     if(outOfDate){
-	    	g2d.setColor(Color.black);
-	    	g2d.drawString("OUT OF DATE", 400, 400);
-	     }
+	     	if(outOfDate){
+	    	 g2d.setColor(Color.black);
+	    		g2d.drawString("OUT OF DATE", 400, 400);
+	     	}
 	     
-	     g2d.setColor(Color.blue);
-	     //g2d.fillRect((int)(bob.x-(Math.sqrt(bob.health)/2)),(int) (bob.y-(Math.sqrt(bob.health)/2)),(int) Math.sqrt(bob.health),(int)Math.sqrt(bob.health));
-	     g2d.drawImage(bob.pic,(int) (bob.x-(Math.sqrt(bob.health)/2)), 
-	     (int) (bob.y-(Math.sqrt(bob.health)/2)), (int)Math.sqrt(bob.health),(int) Math.sqrt(bob.health), this);
+	     	g2d.setColor(Color.blue);
+	     	//g2d.fillRect((int)(bob.x-(Math.sqrt(bob.health)/2)),(int) (bob.y-(Math.sqrt(bob.health)/2)),(int) Math.sqrt(bob.health),(int)Math.sqrt(bob.health));
+	     	g2d.drawImage(bob.pic,(int) (bob.x-(Math.sqrt(bob.health)/2)), 
+	    		 (int) (bob.y-(Math.sqrt(bob.health)/2)), (int)Math.sqrt(bob.health),(int) Math.sqrt(bob.health), this);
 	     
-	     g2d.drawString(bob.id, bob.x,(int) (bob.y-(Math.sqrt(bob.health)+10)));
+	     	g2d.drawString(bob.id, bob.x,(int) (bob.y-(Math.sqrt(bob.health)+10)));
 	     
-	     g2d.setColor(Color.green);
-	     for(int i = 0; i<others.size(); i++){
-	    	 g2d.drawImage(others.get(i).pic,(int) (others.get(i).x-(Math.sqrt(others.get(i).health)/2)), 
-	    		     (int) (others.get(i).y-(Math.sqrt(others.get(i).health)/2)), (int)Math.sqrt(others.get(i).health),(int) Math.sqrt(others.get(i).health), this);
-	    	 g2d.drawString(others.get(i).id, others.get(i).x,(int) (others.get(i).y-(Math.sqrt(others.get(i).health))+10));
-	     }
-	     g2d.setColor(Color.red);
-	     for (bullet bub : bullets){
-	    	 g2d.fillRect(bub.x-2, bub.y-2, 4, 4);
-	     }
+	     	g2d.setColor(Color.green);
+	     	for(int i = 0; i<others.size(); i++){
+	    	 	g2d.drawImage(others.get(i).pic,(int) (others.get(i).x-(Math.sqrt(others.get(i).health)/2)), 
+	    		     	(int) (others.get(i).y-(Math.sqrt(others.get(i).health)/2)), (int)Math.sqrt(others.get(i).health),(int) Math.sqrt(others.get(i).health), this);
+	    	 	g2d.drawString(others.get(i).id, others.get(i).x,(int) (others.get(i).y-(Math.sqrt(others.get(i).health))+10));
+	     	}
+	     	g2d.setColor(Color.red);
+	     	for (bullet bub : bullets){
+	    	 	g2d.fillRect(bub.x-2, bub.y-2, 4, 4);
+	     	}
+    	}
     }
     
     public void setUp(String arg, int num){
-    	this.setSize(1280, 720);
-    	addMouseListener(this);
-        addKeyListener(this);
+        frame = new keyFrame();
+        frame.setTitle("PixWars V 1.2 (press 'm' to mute)");
+        frame.setSize(1280, 720);
+        frame.setVisible(true);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(keyFrame.EXIT_ON_CLOSE);
+        frame.addMouseListener(frame);
+        frame.addKeyListener(frame);
+        
+        pic = new anim();
+        frame.add(pic);
         
         menu(arg, num);
         
@@ -225,6 +231,7 @@ public class mainClass extends Applet implements Runnable, KeyListener, MouseLis
         url = getClass().getResource("uu.png");
         uu = new ImageIcon(url).getImage();
         
+        loop();
     }
     
     public void menu(String arg,int num){
@@ -235,101 +242,59 @@ public class mainClass extends Applet implements Runnable, KeyListener, MouseLis
     	name = arg;
     	bob = new hero(name, num);
     }
-    
-    public void start(String arg, int num){
+
+    //public void start(String arg, int num)
+    	public static void main(String[] args){
     	if(flag){
+    		String randomName = "a";
     		flag = false;
-	        game = new Thread(this);
-	        setUp(arg, num);
-	        game.start();
+    		int a = (int) (Math.random()*35);
+    		try{a = new Integer(args[1]).intValue();}catch(Exception butt){}
+	        try{new Main().setUp(args[0], a);}catch(Exception dumb){
+        	if(a == 0) randomName = "Doge";
+        	else if(a == 1) randomName = "Bob";
+        	else if(a == 2) randomName = "Bill";
+        	else if(a == 3) randomName = "Onion";
+        	else if(a == 4) randomName = "Skillet";
+        	else if(a == 5) randomName = "USB drive";
+        	else if(a == 6) randomName = "Edison";
+        	else if(a == 7) randomName = "Macinwash";
+        	else if(a == 8) randomName = "Windwools";
+        	else if(a == 9) randomName = "Linpux";
+        	else if(a == 10) randomName = "Protein";
+        	else if(a == 11) randomName = "Carbohydrate";
+        	else if(a == 12) randomName = "Fat";
+        	else if(a == 13) randomName = "CannonFodder";
+        	else if(a == 14) randomName = "Rice";
+        	else if(a == 15) randomName = "Spinich";
+        	
+        	else if(a == 16) randomName = "Tesla";
+        	else if(a == 17) randomName = "Gauss";
+        	else if(a == 18) randomName = "Newton";
+        	else if(a == 19) randomName = "Pi";
+        	else if(a == 20) randomName = "Java";
+        	else if(a == 21) randomName = "Kepler";
+        	else if(a == 22) randomName = "Python";
+        	else if(a == 23) randomName = "Lisp";
+        	else if(a == 24) randomName = "Einstein";
+        	else if(a == 25) randomName = "Hindenburg";
+        	
+        	else if(a == 26) randomName = "C++";
+        	else if(a == 27) randomName = "Assembly";
+        	else if(a == 28) randomName = "Pearl";
+        	else if(a == 29) randomName = "QWERTY";
+        	else if(a == 30) randomName = "Voltaire";
+        	else if(a == 31) randomName = "Dalek";
+        	else if(a == 32) randomName = "Feinman";
+        	else if(a == 33) randomName = "Star Fox";
+        	else if(a == 34) randomName = "Princess Peach";
+        	else if(a == 35) randomName = "Higgs Boson";
+        	
+        	System.out.println(a);
+	        
+	        new Main().setUp(randomName, a);}
+    		}
     	}
     }
     
-    public void stop(){
-    	//this code does not run when the window is closed
-    }
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		keys[arg0.getKeyCode()] = true;
-		if(textFlag){
-			if(arg0.getKeyCode() == KeyEvent.VK_ENTER){ textFlag = false;System.out.println(name);}
-			else name = name+arg0.getKeyChar();
-		}
-		if(keys[KeyEvent.VK_M]){
-			if(music){
-				music = false;
-				cd.close();
-			}
-			else {
-				cd = new mp3("Go Cart.mp3");
-				cd.play();
-				music = true;
-			}
-		}
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		keys[arg0.getKeyCode()] = false;
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	// Double Buffering(removes flicker)
-    public void update (Graphics g){
-        // initialize buffer
-        if(dbImage == null){
-            dbImage = createImage(this.getSize().width, this.getSize().height);
-            dbg = dbImage.getGraphics();
-        }
-
-        // clear screen in background
-        dbg.setColor(getBackground());
-        dbg.fillRect(0, 0, this.getSize().width, this.getSize().height);
-
-        // draw elements in background 
-        dbg.setColor(getForeground());
-        paint(dbg);
-
-        // draw image on the screen
-        g.drawImage (dbImage, 0, 0, this);
-    }
-
-}
+    

@@ -27,10 +27,10 @@ public class bullet {
 	}
 	public boolean collide(){
 		// true, kill = true
-		for (ether e: mainClass.others){
+		for (ether e: Main.others){
 			int ghg =(int) (Math.sqrt(e.health)/2)+10;
 			if(Math.sqrt((Math.pow((e.x-x),2))+(Math.pow((e.y-y),2))) < ghg && q != e) {kill = true;
-				if(home)mainClass.bob.health = mainClass.bob.health + Math.max((e.health/5),25); 
+				if(home)Main.bob.health = Main.bob.health + Math.max((e.health/5),25); 
 			}
 		}
 		return false;
