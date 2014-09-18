@@ -69,10 +69,9 @@ public class Main{
     		bob.move(frame);
     		if(true){
     			try{
-    				bob.flag = false;
     	    		outputBuffer.write(bob.getStatus());
     	    		outputBuffer.flush();
-    	    		}catch(Exception e){System.out.println("oops"); bob.flag = true; }
+    	    		}catch(Exception e){System.out.println("oops");}
     			try{parse(inputBuffer.readLine());}catch (Exception e){}
     		}int i = 100020;
     		int j = 100021;
@@ -117,13 +116,12 @@ public class Main{
     			if(others.get(j).countdown < 0) dead = others.get(j);
     			}
     		}
-    		if(dead != null){System.out.println("trap triggered");
+    		if(dead != null){System.out.println("player " + dead.id + " has left the battle");
     			others.remove(dead);
     			dead = null;
     		}
     		
     		if(flag && !bob.id.equals(tokens[i])){
-    			System.out.println("new ether");
     			ether e = new ether();
     			e.pic = rr;
     			e.id = tokens[i];
@@ -131,6 +129,7 @@ public class Main{
     			e.x = new Integer(tokens[i+2]).intValue();
     			e.y = new Integer(tokens[i+3]).intValue();
     			e.type = new Integer(tokens[i+4]).intValue();
+    			System.out.println("Player "+ e.id + "has entered.");
     			others.add(e);
     		}
     	}
@@ -189,15 +188,16 @@ public class Main{
     	Socket clientSocket = new Socket(IP,1234);
 		inputBuffer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		outputBuffer = new PrintWriter(clientSocket.getOutputStream());
-		System.out.println("waiting for date");
+		System.out.println("authenticating");
 		date = (char) inputBuffer.read();
 		}
     	catch (Exception h){System.out.println("connection failed");bob = null;}
     	cd = new mp3("Go Cart.mp3");
     	cd.play();
     	
-    	if(date != '2')outOfDate = true;
-    	System.out.println(outOfDate);
+    	if(date != '3'){outOfDate = true; 
+    	System.out.println("Authentication failed, please update");}
+    	else {System.out.println("Authentification passed, game is up to date");}
     	url = getClass().getResource("dd.png");
         dd = new ImageIcon(url).getImage();
         url = getClass().getResource("dl.png");
@@ -290,7 +290,7 @@ public class Main{
         	else if(a == 34) randomName = "Princess Peach";
         	else if(a == 35) randomName = "Higgs Boson";
         	
-        	System.out.println(a);
+        	System.out.println("entering battle as "+randomName);
 	        
 	        new Main().setUp(randomName, a);}
     		}

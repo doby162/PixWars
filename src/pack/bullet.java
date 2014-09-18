@@ -26,7 +26,7 @@ public class bullet {
 		else if(x > 2000) kill = true;
 	}
 	public boolean collide(){
-		// true, kill = true
+		// this only handles collisions with ethers
 		for (ether e: Main.others){
 			int ghg =(int) (Math.sqrt(e.health)/2)+10;
 			if(Math.sqrt((Math.pow((e.x-x),2))+(Math.pow((e.y-y),2))) < ghg && q != e) {kill = true;

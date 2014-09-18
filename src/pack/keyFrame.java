@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 public class keyFrame extends JFrame implements MouseListener, MouseMotionListener, KeyListener{
 	static boolean[] keys = new boolean[525];
+	boolean flag = true;
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -45,6 +46,7 @@ public class keyFrame extends JFrame implements MouseListener, MouseMotionListen
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
+		flag = true;
 		keys[arg0.getKeyCode()] = true;
 		if(Main.textFlag){
 			if(arg0.getKeyCode() == KeyEvent.VK_ENTER){ Main.textFlag = false;System.out.println(Main.name);}
@@ -68,7 +70,7 @@ public class keyFrame extends JFrame implements MouseListener, MouseMotionListen
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		keys[arg0.getKeyCode()] = false;
-		
+		flag = true;
 	}
 
 	@Override

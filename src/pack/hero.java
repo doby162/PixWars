@@ -9,7 +9,6 @@ public class hero {
 	int y = 5;
 	String id;
 	int type = 2;
-	boolean flag = true;
 	boolean canFire = false;
 	int coolDown = 0;
 	Image pic;
@@ -23,10 +22,10 @@ public class hero {
 		int X = x;//capital coords are one frame in the past
 		int Y = y;
 		
-		if(a.keys[KeyEvent.VK_W] == true){y = y-4; flag = true; dir2 = 2;}
-		if(a.keys[KeyEvent.VK_S] == true){y = y+4; flag = true; dir2 = 4;}
-		if(a.keys[KeyEvent.VK_A] == true){x = x-4; flag = true; dir2 = 3;}
-		if(a.keys[KeyEvent.VK_D] == true){x = x+4; flag = true; dir2 = 1;}
+		if(a.keys[KeyEvent.VK_W] == true){y = y-4; dir2 = 2;}
+		if(a.keys[KeyEvent.VK_S] == true){y = y+4; dir2 = 4;}
+		if(a.keys[KeyEvent.VK_A] == true){x = x-4; dir2 = 3;}
+		if(a.keys[KeyEvent.VK_D] == true){x = x+4; dir2 = 1;}
 		
 		if(dir2 == 1){
 			switch (dir){
@@ -129,7 +128,6 @@ public class hero {
 	public String getStatus(){
 		String status = new String("~"+id+"~"+new Integer(health).toString()+"~"+ new Integer(x).toString()+"~"+new Integer(y).toString()
 				+"~"+new Integer(type).toString()+"\n");
-		flag = false;
 		return status;
 	}
 	public hero(String z, int num){
