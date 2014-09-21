@@ -14,6 +14,8 @@ public class ether {
 	int dir2;
 	int dir;
 	Image pic;
+	String message = "";
+	boolean flag = true;
 	public void testFire(){
 		if(type > 0 && type < 5) {Main.bullets.add(new bullet(x, y, type, false, this));
 		dir = type;

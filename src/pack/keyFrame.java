@@ -48,10 +48,6 @@ public class keyFrame extends JFrame implements MouseListener, MouseMotionListen
 	public void keyPressed(KeyEvent arg0) {
 		flag = true;
 		keys[arg0.getKeyCode()] = true;
-		if(Main.textFlag){
-			if(arg0.getKeyCode() == KeyEvent.VK_ENTER){ Main.textFlag = false;System.out.println(Main.name);}
-			else Main.name = Main.name+arg0.getKeyChar();
-		}
 		if(keys[KeyEvent.VK_M]){
 			if(Main.music){
 				Main.music = false;
@@ -75,7 +71,6 @@ public class keyFrame extends JFrame implements MouseListener, MouseMotionListen
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 

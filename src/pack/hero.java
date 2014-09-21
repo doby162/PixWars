@@ -7,6 +7,8 @@ public class hero {
 	int health = 1000;
 	int x = 5;
 	int y = 5;
+	int X = 5;
+	int Y = 5;
 	String id;
 	int type = 2;
 	boolean canFire = false;
@@ -14,18 +16,20 @@ public class hero {
 	Image pic;
 	int dir = 1;
 	int dir2 = 1;
+	int dir3 = 1;
 	
 	public void move(keyFrame a){
 		type = 0;
 		if(coolDown > 0) coolDown--;
 		if(coolDown == 0) canFire = true; 
-		int X = x;//capital coords are one frame in the past
-		int Y = y;
+		X = x;//capital coords are one frame in the past
+		Y = y;
 		
+		if(a.keys[KeyEvent.VK_D] == true){x = x+4; dir2 = 1;}
 		if(a.keys[KeyEvent.VK_W] == true){y = y-4; dir2 = 2;}
 		if(a.keys[KeyEvent.VK_S] == true){y = y+4; dir2 = 4;}
 		if(a.keys[KeyEvent.VK_A] == true){x = x-4; dir2 = 3;}
-		if(a.keys[KeyEvent.VK_D] == true){x = x+4; dir2 = 1;}
+		
 		
 		if(dir2 == 1){
 			switch (dir){
@@ -126,8 +130,11 @@ public class hero {
 		return false;
 	}
 	public String getStatus(){
-		String status = new String("~"+id+"~"+new Integer(health).toString()+"~"+ new Integer(x).toString()+"~"+new Integer(y).toString()
-				+"~"+new Integer(type).toString()+"\n");
+		//String status = new String("~"+id+"~"+new Integer(health).toString()+"~"+ new Integer(x).toString()+"~"+new Integer(y).toString()
+		//		+"~"+new Integer(type).toString()+"\n");
+		String status = new String("~"+id+"~"+new Integer(health).toString()+"~"+ new Integer(x).toString()
+				+"~"+new Integer(y).toString()+"~"+new Integer(x-X).toString()+"~"+new Integer(y-Y).toString()
+				+"~"+new Integer(type).toString()+"~");
 		return status;
 	}
 	public hero(String z, int num){

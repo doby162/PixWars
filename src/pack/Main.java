@@ -17,6 +17,7 @@ public class Main{
 	
 	boolean failedConnection = false;
 	char date = '3';
+	input in;
 	
     static Image dd;
     static Image dl;
@@ -65,6 +66,8 @@ public class Main{
     static ether dead = null;
     
     public void loop() {
+    	Thread in = new Thread(new input(inputBuffer));
+    	in.start();
     	double time = System.currentTimeMillis();
     	double timeElapsed = System.currentTimeMillis();
     	while(true){
@@ -72,10 +75,11 @@ public class Main{
     		bob.move(frame);
     		if(true){
     			try{
-    	    		outputBuffer.write(bob.getStatus());
+    	    		if(frame.flag){outputBuffer.println(bob.getStatus());
     	    		outputBuffer.flush();
+    	    		frame.flag = false;}
     	    		}catch(Exception e){System.out.println("Connection lost");failedConnection = true;}
-    			try{parse(inputBuffer.readLine());}catch (Exception e){}
+    			parse();
     		}int i = 100020;
     		int j = 100021;
     		for(bullet bul: bullets){
@@ -96,13 +100,18 @@ public class Main{
     		frame.repaint();
     		timeElapsed = System.currentTimeMillis();
     		int a = (int)(timeElapsed - time);
-    		try{Thread.sleep(100-a);}catch(Exception e){System.out.println("Ping too high!");}//magic
+    		try{Thread.sleep(50-a);}catch(Exception e){System.out.println("Ping too high!");}//magic
     		if(failedConnection) break;
     	}
 		
 	} //magic
     
-    public void parse(String a){
+    
+    
+    
+    
+    public void parse(){
+    	/*
     	String[] tokens = a.split("~");
     	for(int i = 1; i < tokens.length; i = i+5){
     		boolean flag = true;
@@ -137,7 +146,31 @@ public class Main{
     			others.add(e);
     		}
     	}
+   
+    */	ether dead = null;
+    	for(ether e: others){
+    		e.pic = dd;
+    		String[] tokens = e.message.split("~");
+    		try{e.health = new Integer(tokens[2]).intValue();
+    		if(e.flag){
+    			e.x = new Integer(tokens[3]).intValue();
+    			e.y = new Integer(tokens[4]).intValue();
+    		} else {
+    			e.x = e.x + (new Integer(tokens[5]));
+    			e.y = e.y + (new Integer(tokens[6]));
+    		}e.flag = false;
+    		e.type = new Integer(tokens[7]);
+    		e.testFire();}catch(Exception shortmessage){System.out.println("received bad message:" + tokens[0]); 
+    		//dead = e; uncheck this
+    		shortmessage.printStackTrace();
+    		}
+    	}others.remove(dead);
+    	
     }
+    
+    
+    
+    
     class anim extends JPanel{
     	public void paintComponent(Graphics g){
 		 	Graphics2D g2d = (Graphics2D) g;
@@ -159,7 +192,7 @@ public class Main{
 	     	g2d.drawString(bob.id, bob.x,(int) (bob.y-(Math.sqrt(bob.health)+10)));
 	     
 	     	g2d.setColor(Color.green);
-	     	for(int i = 0; i<others.size(); i++){
+	     	for(int i = 0; i<others.size(); i++){System.out.println(others.size());
 	    	 	g2d.drawImage(others.get(i).pic,(int) (others.get(i).x-(Math.sqrt(others.get(i).health)/2)), 
 	    		     	(int) (others.get(i).y-(Math.sqrt(others.get(i).health)/2)), (int)Math.sqrt(others.get(i).health),(int) Math.sqrt(others.get(i).health), this);
 	    	 	g2d.drawString(others.get(i).id, others.get(i).x,(int) (others.get(i).y-(Math.sqrt(others.get(i).health))+10));
@@ -174,7 +207,8 @@ public class Main{
     public void setUp(String arg, int num){
         frame = new keyFrame();
         frame.setTitle("PixWars V 2.0 (press 'm' to mute)");
-        frame.setSize(1280, 720);
+        //frame.setSize(1280, 720);
+        frame.setSize(500, 500);
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(keyFrame.EXIT_ON_CLOSE);
@@ -194,6 +228,7 @@ public class Main{
 		System.out.println("authenticating");
 		//date = (char) inputBuffer.read();
 		outputBuffer.println(date);
+		outputBuffer.flush();
 		}
     	catch (Exception h){System.out.println("connection failed, or server might be down");failedConnection = true;}
     	cd = new mp3("Go Cart.mp3");
