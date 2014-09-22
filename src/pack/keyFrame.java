@@ -46,7 +46,6 @@ public class keyFrame extends JFrame implements MouseListener, MouseMotionListen
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		flag = true;
 		keys[arg0.getKeyCode()] = true;
 		if(keys[KeyEvent.VK_M]){
 			if(Main.music){
@@ -60,18 +59,18 @@ public class keyFrame extends JFrame implements MouseListener, MouseMotionListen
 			}
 		}
 
-
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		keys[arg0.getKeyCode()] = false;
-		flag = true;
+		if(keys[arg0.getKeyCode()]){
+		keys[arg0.getKeyCode()] = ! keys[arg0.getKeyCode()];
+		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		
+
 	}
 
 }

@@ -15,7 +15,7 @@ public class input implements Runnable{
 	@Override
 	public void run() {
 		while(true){
-			try{Thread.sleep(20);}catch(Exception e){}
+			try{Thread.sleep(5);}catch(Exception e){}
 			try {
 				input = in.readLine();
 				//System.out.println(input);
@@ -23,23 +23,23 @@ public class input implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}boolean match = false;
-			System.out.println(Main.others.size());
 			for(ether e: Main.others){
 				if(input.contains(e.id)){
 					match = true;
 					e.flag = true;
+					e.countdown = 50;
 					e.message = input;
-					System.out.println("match:" + e.message);
 				}
 			}
-			if(!match && !input.contains(Main.name)){
-				System.out.println("main name is "+Main.name);
+			if(!match && !input.contains(Main.name) && input.length() > 0){
 				ether f = new ether();
 				f.flag = true;
+				f.countdown = 50;
 				String[] tokens = input.split("~");
 				f.id = tokens[1];
-				System.out.println(tokens[1]);
 				f.message = input;
+				f.dir = 1;
+				f.dir2 = 1;
 				Main.others.add(f);
 				System.out.println("ether added: " + f.id);
 			}

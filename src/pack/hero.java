@@ -9,6 +9,8 @@ public class hero {
 	int y = 5;
 	int X = 5;
 	int Y = 5;
+	int XX = 5;
+	int YY = 5;
 	String id;
 	int type = 2;
 	boolean canFire = false;
@@ -22,6 +24,8 @@ public class hero {
 		type = 0;
 		if(coolDown > 0) coolDown--;
 		if(coolDown == 0) canFire = true; 
+		XX = X;
+		YY = Y;
 		X = x;//capital coords are one frame in the past
 		Y = y;
 		
@@ -29,6 +33,9 @@ public class hero {
 		if(a.keys[KeyEvent.VK_W] == true){y = y-4; dir2 = 2;}
 		if(a.keys[KeyEvent.VK_S] == true){y = y+4; dir2 = 4;}
 		if(a.keys[KeyEvent.VK_A] == true){x = x-4; dir2 = 3;}
+		
+		if (X - XX != x - X)Main.frame.flag = true;
+		if (Y - YY != y - Y)Main.frame.flag = true;
 		
 		
 		if(dir2 == 1){
@@ -84,6 +91,7 @@ public class hero {
 			else if(a.keys[KeyEvent.VK_LEFT]) type = 3;
 			else if(a.keys[KeyEvent.VK_DOWN]) type = 4;
 			if(type > 0 && type < 5 && health > 0) {
+				Main.frame.flag = true;
 				dir = type;
 				health = health -15;
 				canFire = false;
@@ -101,7 +109,7 @@ public class hero {
 		if(loss < 25) loss = 25;
 		type = loss; 
 		health = health - loss;
-				
+		Main.frame.flag = true;
 	}
 	public boolean bulCollide(){
 		//check for collision with shot

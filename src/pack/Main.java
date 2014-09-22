@@ -16,7 +16,7 @@ public class Main{
 	anim pic;
 	
 	boolean failedConnection = false;
-	char date = '3';
+	char date = '4';
 	input in;
 	
     static Image dd;
@@ -47,6 +47,7 @@ public class Main{
     static mp3 cd;
     static boolean music = true;
     int mus = 0;
+    int prevmus = 0;
     
     Thread game;
     static boolean flag = true;
@@ -65,6 +66,7 @@ public class Main{
     
     static ether dead = null;
     
+    
     public void loop() {
     	Thread in = new Thread(new input(inputBuffer));
     	in.start();
@@ -73,14 +75,14 @@ public class Main{
     	while(true){
     		time = System.currentTimeMillis();
     		bob.move(frame);
-    		if(true){
-    			try{
-    	    		if(frame.flag){outputBuffer.println(bob.getStatus());
+    		if(frame.flag){
+    			try{outputBuffer.println(bob.getStatus());
     	    		outputBuffer.flush();
-    	    		frame.flag = false;}
+    	    		frame.flag = false;
     	    		}catch(Exception e){System.out.println("Connection lost");failedConnection = true;}
+    		}
     			parse();
-    		}int i = 100020;
+    		int i = 100020;
     		int j = 100021;
     		for(bullet bul: bullets){
     			bul.move();
@@ -91,12 +93,16 @@ public class Main{
     		if(i != 100020)bullets.remove(i);
     		if(j != 100021)bullets.remove(j);
     		mus++;
-    		if(mus > 2120 && music){
+    		if(mus > 4240 && music){//mus counts frames untill music resset, AND helps with network stuff
     			cd.close();
     			cd = new mp3("Go Cart.mp3");
     			cd.play();
     			mus = 0;
+    		}if(mus > prevmus+20){
+    			frame.flag = true;
+    			prevmus = mus;
     		}
+    		else if (prevmus > mus)prevmus = mus;
     		frame.repaint();
     		timeElapsed = System.currentTimeMillis();
     		int a = (int)(timeElapsed - time);
@@ -149,23 +155,25 @@ public class Main{
    
     */	ether dead = null;
     	for(ether e: others){
+    		e.countdown--;
+    		if(e.countdown < 0) dead = e;
     		e.pic = dd;
     		String[] tokens = e.message.split("~");
     		try{e.health = new Integer(tokens[2]).intValue();
     		if(e.flag){
     			e.x = new Integer(tokens[3]).intValue();
     			e.y = new Integer(tokens[4]).intValue();
+    			e.type = new Integer(tokens[7]);
     		} else {
     			e.x = e.x + (new Integer(tokens[5]));
     			e.y = e.y + (new Integer(tokens[6]));
     		}e.flag = false;
-    		e.type = new Integer(tokens[7]);
     		e.testFire();}catch(Exception shortmessage){System.out.println("received bad message:" + tokens[0]); 
-    		//dead = e; uncheck this
+    		dead = e;
     		shortmessage.printStackTrace();
     		}
     	}others.remove(dead);
-    	
+    	if(dead != null)System.out.println(dead.id + " left the game");
     }
     
     
@@ -192,7 +200,7 @@ public class Main{
 	     	g2d.drawString(bob.id, bob.x,(int) (bob.y-(Math.sqrt(bob.health)+10)));
 	     
 	     	g2d.setColor(Color.green);
-	     	for(int i = 0; i<others.size(); i++){System.out.println(others.size());
+	     	for(int i = 0; i<others.size(); i++){
 	    	 	g2d.drawImage(others.get(i).pic,(int) (others.get(i).x-(Math.sqrt(others.get(i).health)/2)), 
 	    		     	(int) (others.get(i).y-(Math.sqrt(others.get(i).health)/2)), (int)Math.sqrt(others.get(i).health),(int) Math.sqrt(others.get(i).health), this);
 	    	 	g2d.drawString(others.get(i).id, others.get(i).x,(int) (others.get(i).y-(Math.sqrt(others.get(i).health))+10));
@@ -207,8 +215,8 @@ public class Main{
     public void setUp(String arg, int num){
         frame = new keyFrame();
         frame.setTitle("PixWars V 2.0 (press 'm' to mute)");
-        //frame.setSize(1280, 720);
-        frame.setSize(500, 500);
+        frame.setSize(1280, 720);
+        //frame.setSize(500, 500);
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(keyFrame.EXIT_ON_CLOSE);
@@ -221,6 +229,7 @@ public class Main{
         menu(arg, num);
         
     	String IP = new String("107.196.11.5");
+    	String check = null;
     	try{
     	Socket clientSocket = new Socket(IP,1234);
 		inputBuffer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -229,12 +238,13 @@ public class Main{
 		//date = (char) inputBuffer.read();
 		outputBuffer.println(date);
 		outputBuffer.flush();
+		check = inputBuffer.readLine();
 		}
     	catch (Exception h){System.out.println("connection failed, or server might be down");failedConnection = true;}
     	cd = new mp3("Go Cart.mp3");
     	cd.play();
     	
-    	if(date != '3'){outOfDate = true; 
+    	if(check == null){outOfDate = true; 
     	System.out.println("Authentication failed, please update");}
     	else {System.out.println("Authentification passed, game is up to date");}
     	url = getClass().getResource("dd.png");

@@ -10,14 +10,14 @@ public class ether {
 	int Y = 0;
 	String id;
 	int type;
-	int countdown = 15;
+	int countdown = 50;
 	int dir2;
 	int dir;
 	Image pic;
 	String message = "";
 	boolean flag = true;
 	public void testFire(){
-		if(type > 0 && type < 5) {Main.bullets.add(new bullet(x, y, type, false, this));
+		if(type > 0 && type < 5 && health > 0) {Main.bullets.add(new bullet(x, y, type, false, this));
 		dir = type;
 		}
 		if(x > X) dir2 = 1;
@@ -59,6 +59,7 @@ public class ether {
 				case 4: {pic = Main.dd;break;}
 			}
 			}
+		type = 0;
 	}
 
 }
