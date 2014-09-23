@@ -23,6 +23,7 @@ public class input implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}boolean match = false;
+			try{
 			for(ether e: Main.others){
 				if(input.contains(e.id)){
 					match = true;
@@ -30,7 +31,7 @@ public class input implements Runnable{
 					e.countdown = 50;
 					e.message = input;
 				}
-			}
+			}}catch(Exception e){}
 			if(!match && !input.contains(Main.name) && input.length() > 0){
 				ether f = new ether();
 				f.flag = true;

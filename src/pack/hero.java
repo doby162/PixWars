@@ -20,7 +20,16 @@ public class hero {
 	int dir2 = 1;
 	int dir3 = 1;
 	
+	int respawn = 0;
+	boolean died = false;
+	
 	public void move(keyFrame a){
+		
+		if(died) respawn--;
+		if(respawn <= 0 && died) {health = 1000; died = false;}
+		if(health < 0 && !died){died = true; respawn = (100 * Main.others.size()); System.out.println("Died!");
+		if(respawn > 10000) respawn = 10000; if(respawn < 200) respawn = 200;}
+		
 		type = 0;
 		if(coolDown > 0) coolDown--;
 		if(coolDown == 0) canFire = true; 

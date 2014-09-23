@@ -5,15 +5,13 @@ test pixwars over distance with ner server setup with as many people as possible
 make game faster and more dynamic. Speed boosts, charge shots, 
 tweaked movement system, and possibly upgrades or powerups. KISS
 
-respawn, and possibly (maybe) better checks to prevent hacking
+respawn, and possibly (maybe) better checks to prevent hacking DONE
 
 rebalenced to make stalemates less common. Possibly add scoreing system
 
 add sound effects
 
-add menu for custom name entry and instructions
-
-add naming safeguard
+add naming safeguard DONE
 
 server drops connections with more grace DONE
 

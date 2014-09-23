@@ -74,7 +74,7 @@ public class Main{
     	while(true){
     		time = System.currentTimeMillis();
     		bob.move(frame);
-    		if(frame.flag){
+    		if(frame.flag && !bob.died){
     			try{outputBuffer.println(bob.getStatus());
     	    		outputBuffer.flush();
     	    		frame.flag = false;
@@ -153,6 +153,7 @@ public class Main{
     	}
    
     */	ether dead = null;
+    try{
     	for(ether e: others){
     		e.countdown--;
     		if(e.countdown < 0) dead = e;
@@ -171,7 +172,7 @@ public class Main{
     		dead = e;
     		shortmessage.printStackTrace();
     		}
-    	}others.remove(dead);
+    	}}catch(Exception e){}others.remove(dead);
     	if(dead != null)System.out.println(dead.id + " left the game");
     }
     
@@ -188,8 +189,13 @@ public class Main{
 	     
 	     	if(outOfDate){
 	    	 g2d.setColor(Color.black);
-	    		g2d.drawString("OUT OF DATE", 400, 400);
+	    		g2d.drawString("OUT OF DATE OR SERVER IS DOWN", 400, 400);
 	     	}
+	     	if(bob.died){
+	     		g2d.setColor(Color.black);
+	    		g2d.drawString("You died! Respawning in a moment.", 400, 400);
+	     	}
+	     	
 	     
 	     	g2d.setColor(Color.blue);
 	     	//g2d.fillRect((int)(bob.x-(Math.sqrt(bob.health)/2)),(int) (bob.y-(Math.sqrt(bob.health)/2)),(int) Math.sqrt(bob.health),(int)Math.sqrt(bob.health));
@@ -287,7 +293,6 @@ public class Main{
     		check = inputBuffer.readLine();
     		System.out.println("reading names");
     		names = inputBuffer.readLine();
-    		System.out.println("ththththth");
     		}
         	catch (Exception h){System.out.println("connection failed, or server might be down");failedConnection = true;}
         	cd = new mp3("Go Cart.mp3");
@@ -303,7 +308,7 @@ public class Main{
     	//while(!nameresolved){
     		//nameresolved = true;
     		String randomName = "a";
-    		int a = (int) (Math.random()*50);
+    		int a = (int) (Math.random()*36);
     		try{a = new Integer(args[1]).intValue();}catch(Exception butt){}
 	        try{new Main().setUp(args[0], a);}catch(Exception dumb){
 	        	
@@ -350,7 +355,7 @@ public class Main{
         	System.out.println("trying name " + randomName);
         	if(names.contains(randomName)){ nameresolved = false;System.out.println("caught name");}
         	
-        	if(!nameresolved){a = (int) (Math.random()*35);System.out.println("retrying name");}
+        	if(!nameresolved){a = (int) (Math.random()*36);System.out.println("retrying name");}
         	
 	        }System.out.println("entering battle as "+randomName);
 	        new Main().setUp(randomName, a);
