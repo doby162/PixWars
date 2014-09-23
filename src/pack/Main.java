@@ -15,9 +15,10 @@ public class Main{
 	
 	anim pic;
 	
-	boolean failedConnection = false;
-	char date = '4';
+	static boolean failedConnection = false;
+	static char date = '4';
 	input in;
+	static String IP = new String("107.196.11.5");
 	
     static Image dd;
     static Image dl;
@@ -50,13 +51,11 @@ public class Main{
     int prevmus = 0;
     
     Thread game;
-    static boolean flag = true;
     
     static String name = "";
-    static boolean textFlag = true;
     
-    BufferedReader inputBuffer;
-    PrintWriter outputBuffer;
+    static BufferedReader inputBuffer;
+    static PrintWriter outputBuffer;
     String input = null;
     
     static ArrayList<ether> others = new ArrayList<ether>();  
@@ -226,27 +225,12 @@ public class Main{
         pic = new anim();
         frame.add(pic);
         
-        menu(arg, num);
+        name = arg;
+        bob = new hero(name, num);
         
-    	String IP = new String("107.196.11.5");
-    	String check = null;
-    	try{
-    	Socket clientSocket = new Socket(IP,1234);
-		inputBuffer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		outputBuffer = new PrintWriter(clientSocket.getOutputStream());
-		System.out.println("authenticating");
-		//date = (char) inputBuffer.read();
-		outputBuffer.println(date);
-		outputBuffer.flush();
-		check = inputBuffer.readLine();
-		}
-    	catch (Exception h){System.out.println("connection failed, or server might be down");failedConnection = true;}
-    	cd = new mp3("Go Cart.mp3");
-    	cd.play();
     	
-    	if(check == null){outOfDate = true; 
-    	System.out.println("Authentication failed, please update");}
-    	else {System.out.println("Authentification passed, game is up to date");}
+    	
+    	
     	url = getClass().getResource("dd.png");
         dd = new ImageIcon(url).getImage();
         url = getClass().getResource("dl.png");
@@ -283,23 +267,47 @@ public class Main{
         loop();
     }
     
-    public void menu(String arg,int num){
-    	/*while(textFlag){
-    		try{Thread.sleep(200);}catch(Exception e){}
-    		System.out.println("name is" +name);
-    	}*/
-    	name = arg;
-    	bob = new hero(name, num);
-    }
 
     //public void start(String arg, int num)
     	public static void main(String[] args){
-    	if(flag){
+    		
+    		boolean nameresolved = false;
+    		
+    		String names = "";
+
+        	String check = null;
+        	try{
+        	Socket clientSocket = new Socket(IP,1234);
+    		inputBuffer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    		outputBuffer = new PrintWriter(clientSocket.getOutputStream());
+    		System.out.println("authenticating");
+    		//date = (char) inputBuffer.read();
+    		outputBuffer.println(date);
+    		outputBuffer.flush();
+    		check = inputBuffer.readLine();
+    		System.out.println("reading names");
+    		names = inputBuffer.readLine();
+    		System.out.println("ththththth");
+    		}
+        	catch (Exception h){System.out.println("connection failed, or server might be down");failedConnection = true;}
+        	cd = new mp3("Go Cart.mp3");
+        	cd.play();
+        	
+        	if(check == null){outOfDate = true; 
+        	System.out.println("Authentication failed, please update");}
+        	else {System.out.println("Authentification passed, game is up to date");}
+        	
+    		
+    		
+    	
+    	//while(!nameresolved){
+    		//nameresolved = true;
     		String randomName = "a";
-    		flag = false;
-    		int a = (int) (Math.random()*35);
+    		int a = (int) (Math.random()*50);
     		try{a = new Integer(args[1]).intValue();}catch(Exception butt){}
 	        try{new Main().setUp(args[0], a);}catch(Exception dumb){
+	        	
+	        while(!nameresolved){
         	if(a == 0) randomName = "Doge";
         	else if(a == 1) randomName = "Bob";
         	else if(a == 2) randomName = "Bill";
@@ -338,11 +346,20 @@ public class Main{
         	else if(a == 33) randomName = "Star Fox";
         	else if(a == 34) randomName = "Princess Peach";
         	else if(a == 35) randomName = "Higgs Boson";
+        	nameresolved = true;
+        	System.out.println("trying name " + randomName);
+        	if(names.contains(randomName)){ nameresolved = false;System.out.println("caught name");}
         	
-        	System.out.println("entering battle as "+randomName);
+        	if(!nameresolved){a = (int) (Math.random()*35);System.out.println("retrying name");}
+        	
+	        }System.out.println("entering battle as "+randomName);
+	        new Main().setUp(randomName, a);
+    		
 	        
-	        new Main().setUp(randomName, a);}
-    		}
+    	
+    	}
+    	
+    	
     	}
     }
     
