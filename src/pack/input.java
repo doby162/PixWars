@@ -18,6 +18,9 @@ public class input implements Runnable{
 			try{Thread.sleep(5);}catch(Exception e){}
 			try {
 				input = in.readLine();
+				if(input.contains(Main.name)){
+					//System.out.println(System.currentTimeMillis()-Main.ping);
+				}
 				//System.out.println(input);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -32,10 +35,10 @@ public class input implements Runnable{
 					e.message = input;
 				}
 			}}catch(Exception e){}
-			if(!match && !input.contains(Main.name) && input.length() > 0){
+			if(!match && !input.contains(Main.name) && input.length() > 1){
 				ether f = new ether();
 				f.flag = true;
-				f.countdown = 50;
+				f.countdown = 40;
 				String[] tokens = input.split("~");
 				f.id = tokens[1];
 				f.message = input;

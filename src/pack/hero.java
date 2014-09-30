@@ -113,7 +113,7 @@ public class hero {
 		
 	}
 	private void damage(){
-		canFire = false;
+		canFire = false;//why?
 		int loss = health/5;
 		if(loss < 25) loss = 25;
 		type = loss; 

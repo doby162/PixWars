@@ -16,9 +16,10 @@ public class Main{
 	anim pic;
 	
 	static boolean failedConnection = false;
-	static char date = '4';
+	static char date = '5';
 	input in;
 	static String IP = new String("107.196.11.5");
+	static double ping = 0;
 	
     static Image dd;
     static Image dl;
@@ -75,6 +76,7 @@ public class Main{
     		time = System.currentTimeMillis();
     		bob.move(frame);
     		if(frame.flag && !bob.died){
+    			ping = System.currentTimeMillis();
     			try{outputBuffer.println(bob.getStatus());
     	    		outputBuffer.flush();
     	    		frame.flag = false;
@@ -161,8 +163,8 @@ public class Main{
     		String[] tokens = e.message.split("~");
     		try{e.health = new Integer(tokens[2]).intValue();
     		if(e.flag){
-    			e.x = new Integer(tokens[3]).intValue();
-    			e.y = new Integer(tokens[4]).intValue();
+    			e.x = (new Integer(tokens[3]).intValue());
+    			e.y = (new Integer(tokens[4]).intValue());
     			e.type = new Integer(tokens[7]);
     		} else {
     			e.x = e.x + (new Integer(tokens[5]));
