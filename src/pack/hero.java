@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 
 public class hero {
+	ether culpret = null;
 	int health = 1000;
 	int x = 5;
 	int y = 5;
@@ -113,10 +114,9 @@ public class hero {
 		
 	}
 	private void damage(){
-		canFire = false;//why?
-		int loss = health/5;
-		if(loss < 25) loss = 25;
-		type = loss; 
+		int loss = health/3;
+		if(loss < 100) loss = 100;
+		Main.outputBuffer.println("~" + culpret.id + "~" + new Integer(loss).toString() + "~");
 		health = health - loss;
 		Main.frame.flag = true;
 	}
@@ -125,6 +125,7 @@ public class hero {
 		for (bullet bul: Main.bullets){
 			if(Math.sqrt((Math.pow((bul.x-x),2))+(Math.pow((bul.y-y),2))) < ((Math.sqrt(health)/2)+10) && !bul.home){
 				bul.kill = true;
+				culpret = bul.q;
 				return true;
 			}
 		}

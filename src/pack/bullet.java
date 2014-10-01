@@ -30,7 +30,7 @@ public class bullet {
 		for (ether e: Main.others){
 			int ghg =(int) (Math.sqrt(e.health)/2)+10;
 			if(Math.sqrt((Math.pow((e.x-x),2))+(Math.pow((e.y-y),2))) < ghg && q != e) {kill = true;
-				if(home)Main.bob.health = Main.bob.health + Math.max((e.health/5),25); 
+				//if(home)Main.bob.health = Main.bob.health + Math.max((e.health/5),25); 
 			}
 		}
 		return false;

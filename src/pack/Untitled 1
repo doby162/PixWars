@@ -1,6 +1,6 @@
 TODO 
 
-test pixwars over distance with ner server setup with as many people as possible
+test pixwars over distance with new server setup with as many people as possible
 
 make game faster and more dynamic. Speed boosts, charge shots, 
 tweaked movement system, and possibly upgrades or powerups. KISS
@@ -8,6 +8,8 @@ tweaked movement system, and possibly upgrades or powerups. KISS
 respawn, and possibly (maybe) better checks to prevent hacking DONE
 
 rebalenced to make stalemates less common. Possibly add scoreing system
+
+get rid of the growth bug - DONE
 
 add sound effects
 
