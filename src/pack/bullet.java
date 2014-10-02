@@ -3,7 +3,7 @@ package pack;
 public class bullet {
 	int x;
 	int y;
-	int z;
+	int z;//type
 	ether q;
 	boolean home = false;
 	boolean kill = false;
@@ -19,6 +19,11 @@ public class bullet {
 		else if (z == 2) y = y - 15;
 		else if (z == 3) x = x - 15;
 		else if (z == 4) y = y + 15;
+		
+		else if (z == 5) x = x + 20;
+		else if (z == 6) y = y - 20;
+		else if (z == 7) x = x - 20;
+		else if (z == 8) y = y + 20;
 		
 		if(y < 0) kill = true;
 		else if(y > 2000) kill = true;

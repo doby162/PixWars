@@ -3,6 +3,7 @@ package pack;
 import java.awt.Image;
 	
 public class ether {
+	int powerLevel = 0;
 	int health;
 	int x;
 	int y;
@@ -15,15 +16,23 @@ public class ether {
 	int dir;
 	Image pic;
 	String message = "";
+	int tele = 0;
+	int TX = 0;
+	int TY = 0;
 	boolean flag = true;
 	public void testFire(){
-		if(type > 0 && type < 5 && health > 0) {Main.bullets.add(new bullet(x, y, type, false, this));
+		if(type > 0 && type <= 8 && health > 0) {Main.bullets.add(new bullet(x, y, type, false, this));
 		dir = type;
 		}
 		if(x > X) dir2 = 1;
 		else if(X > x) dir2 = 3;
 		else if(y > Y) dir2 = 4;
 		else if(Y > y)dir2 = 2;
+		
+		tele--;;
+		
+		if(Math.sqrt((Math.pow(x-X, 2)+Math.pow(y-Y, 2))) > 30){tele = 200;TX = X; TY = Y;}//detect teleportation
+		
 		X = x;
 		Y = y;
 		if(dir2 == 1){

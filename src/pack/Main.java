@@ -37,6 +37,7 @@ public class Main{
     static Image ul;
     static Image ur;
     static Image uu;
+    static Image tele;
     static URL url;
     
     static keyFrame frame;
@@ -111,7 +112,7 @@ public class Main{
     		if(failedConnection) break;
     	}
 		
-	} //magic
+	} 
     
     
     
@@ -166,6 +167,7 @@ public class Main{
     			e.x = (new Integer(tokens[3]).intValue());
     			e.y = (new Integer(tokens[4]).intValue());
     			e.type = new Integer(tokens[7]);
+    			e.powerLevel = new Integer(tokens[8]);
     		} else {
     			e.x = e.x + (new Integer(tokens[5]));
     			e.y = e.y + (new Integer(tokens[6]));
@@ -199,24 +201,39 @@ public class Main{
 	     	}
 	     	
 	     
-	     	g2d.setColor(Color.blue);
 	     	//g2d.fillRect((int)(bob.x-(Math.sqrt(bob.health)/2)),(int) (bob.y-(Math.sqrt(bob.health)/2)),(int) Math.sqrt(bob.health),(int)Math.sqrt(bob.health));
+	     	if(bob.powerLevel == 3){g2d.setColor(Color.blue); g2d.drawOval((int)(bob.x-(Math.sqrt(bob.health))),(int) (bob.y - Math.sqrt(bob.health)), (int)(Math.sqrt(bob.health)*2), (int)(Math.sqrt(bob.health)*2));}
+	     	if(bob.powerLevel == 2){g2d.setColor(Color.red); g2d.drawOval((int)(bob.x-(Math.sqrt(bob.health))),(int) (bob.y - Math.sqrt(bob.health)), (int)(Math.sqrt(bob.health)*2), (int)(Math.sqrt(bob.health)*2));}
+	     	if(bob.powerLevel == 1){g2d.setColor(Color.yellow); g2d.drawOval((int)(bob.x-(Math.sqrt(bob.health))),(int) (bob.y - Math.sqrt(bob.health)), (int)(Math.sqrt(bob.health)*2), (int)(Math.sqrt(bob.health)*2));}
+	     	
 	     	g2d.drawImage(bob.pic,(int) (bob.x-(Math.sqrt(bob.health)/2)), 
 	    		 (int) (bob.y-(Math.sqrt(bob.health)/2)), (int)Math.sqrt(bob.health),(int) Math.sqrt(bob.health), this);
-	     
+	     	
+	     	g2d.setColor(Color.blue);
 	     	g2d.drawString(bob.id, bob.x,(int) (bob.y-(Math.sqrt(bob.health)+10)));
 	     
-	     	g2d.setColor(Color.green);
+	     	
 	     	for(int i = 0; i<others.size(); i++){
+	     		
+	     		if(others.get(i).powerLevel == 3){g2d.setColor(Color.blue); g2d.drawOval((int)(others.get(i).x-(Math.sqrt(others.get(i).health))),(int) (others.get(i).y - Math.sqrt(others.get(i).health)), (int)(Math.sqrt(others.get(i).health)*2), (int)(Math.sqrt(others.get(i).health)*2));}
+		     	if(others.get(i).powerLevel == 2){g2d.setColor(Color.red); g2d.drawOval((int)(others.get(i).x-(Math.sqrt(others.get(i).health))),(int) (others.get(i).y - Math.sqrt(others.get(i).health)), (int)(Math.sqrt(others.get(i).health)*2), (int)(Math.sqrt(others.get(i).health)*2));}
+		     	if(others.get(i).powerLevel == 1){g2d.setColor(Color.yellow); g2d.drawOval((int)(others.get(i).x-(Math.sqrt(others.get(i).health))),(int) (others.get(i).y - Math.sqrt(others.get(i).health)), (int)(Math.sqrt(others.get(i).health)*2), (int)(Math.sqrt(others.get(i).health)*2));}
+	     		
 	    	 	g2d.drawImage(others.get(i).pic,(int) (others.get(i).x-(Math.sqrt(others.get(i).health)/2)), 
 	    		     	(int) (others.get(i).y-(Math.sqrt(others.get(i).health)/2)), (int)Math.sqrt(others.get(i).health),(int) Math.sqrt(others.get(i).health), this);
+	    	 	
+	    	 	//if(others.get(i).tele > 0){g2d.drawImage(tele,(int) (others.get(i).TX-(Math.sqrt(others.get(i).health)/2)), 
+	    		//     	(int) (others.get(i).TY-(Math.sqrt(others.get(i).health)/2)), (int)Math.sqrt(others.get(i).health),(int) Math.sqrt(others.get(i).health), this);}
+	    	 	
+	    	 	g2d.setColor(Color.green);
 	    	 	g2d.drawString(others.get(i).id, others.get(i).x,(int) (others.get(i).y-(Math.sqrt(others.get(i).health))+10));
 	     	}
-	     	g2d.setColor(Color.red);
 	     	for (bullet bub : bullets){
-	    	 	g2d.fillRect(bub.x-2, bub.y-2, 4, 4);
+	     		g2d.setColor(Color.red);
+	     		if(bub.z > 4)g2d.setColor(Color.cyan);
+	    	 	g2d.fillOval(bub.x-3, bub.y-3, 6, 6);
 	     	}
-    	}
+    	} 
     }
     
     public void setUp(String arg, int num){
@@ -271,6 +288,8 @@ public class Main{
         ur = new ImageIcon(url).getImage();
         url = getClass().getResource("uu.png");
         uu = new ImageIcon(url).getImage();
+        url = getClass().getResource("tele.png");
+        tele = new ImageIcon(url).getImage();
         
         loop();
     }
