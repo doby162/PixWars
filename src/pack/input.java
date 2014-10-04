@@ -27,9 +27,8 @@ public class input implements Runnable{
 					//System.out.println(System.currentTimeMillis()-Main.ping);
 				}
 				//System.out.println(input);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace(); System.out.println("name"); System.out.println(input);
 			}boolean match = false;
 			try{
 			for(ether e: Main.others){
@@ -39,7 +38,7 @@ public class input implements Runnable{
 					e.countdown = 50;
 					e.message = input;
 				}
-			}}catch(Exception e){}
+			}}catch(Exception e){e.printStackTrace();}
 			if(!match && !input.contains(Main.name)  && (input.length() - input.replace("~", "").length()) > 5){
 				ether f = new ether();
 				f.flag = true;

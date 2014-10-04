@@ -176,7 +176,7 @@ public class Main{
     		dead = e;
     		shortmessage.printStackTrace();
     		}
-    	}}catch(Exception e){}others.remove(dead);
+    	}}catch(Exception e){e.printStackTrace();}others.remove(dead);
     	if(dead != null)System.out.println(dead.id + " left the game");
     }
     
@@ -237,6 +237,7 @@ public class Main{
     }
     
     public void setUp(String arg, int num){
+    	frame.dispose();
         frame = new keyFrame();
         frame.setTitle("PixWars V 2.0 (press 'm' to mute)");
         frame.setSize(1280, 720);
@@ -297,6 +298,18 @@ public class Main{
 
     //public void start(String arg, int num)
     	public static void main(String[] args){
+    		
+    		
+    		frame = new keyFrame();
+            frame.setTitle("PixWars V 2.0 (press 'm' to mute)");
+            frame.setSize(1280, 720);
+            //frame.setSize(500, 500);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            frame.setDefaultCloseOperation(keyFrame.EXIT_ON_CLOSE);
+            frame.addMouseListener(frame);
+            frame.addKeyListener(frame);
+    		
     		
     		boolean nameresolved = false;
     		
