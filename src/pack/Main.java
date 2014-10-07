@@ -5,6 +5,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.net.URL;
+import java.io.File;
+import javax.script.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -56,6 +58,12 @@ public class Main{
     
     static String name = "";
     
+    static boolean bot = false;
+    static String botscript = null;
+    ScriptEngine engine;
+	ScriptContext con;
+	AI ai = null;
+    
     static BufferedReader inputBuffer;
     static PrintWriter outputBuffer;
     String input = null;
@@ -74,6 +82,11 @@ public class Main{
     	double time = System.currentTimeMillis();
     	double timeElapsed = System.currentTimeMillis();
     	while(true){
+    		if(bot){
+    		try {engine.eval(botscript, con);} catch (ScriptException e1) {
+				System.out.println("Couldn't run script!");
+				e1.printStackTrace();
+			}}
     		time = System.currentTimeMillis();
     		bob.move(frame);
     		if(frame.flag && !bob.died){
@@ -181,8 +194,6 @@ public class Main{
     }
     
     
-    
-    
     class anim extends JPanel{
     	public void paintComponent(Graphics g){
 		 	Graphics2D g2d = (Graphics2D) g;
@@ -255,6 +266,12 @@ public class Main{
         bob = new hero(name, num);
         
     	
+        ScriptEngineManager factory = new ScriptEngineManager();
+        engine = factory.getEngineByName("JavaScript");
+        con = engine.getContext();
+        ai = new AI();
+        engine.put("bot", ai);
+        
     	
     	
     	url = getClass().getResource("dd.png");
@@ -298,6 +315,17 @@ public class Main{
 
     //public void start(String arg, int num)
     	public static void main(String[] args){
+    		
+    		try{if(args[0].equals("bot"))bot = true;}catch(Exception e){}
+    		if(bot){
+				try {botscript = new Scanner(new File("bot.txt")).useDelimiter("\\Z").next();
+				} catch (FileNotFoundException e) {
+					System.out.println("bot.txt not found, loading default AI script. Please place any custom JavaScript " +
+							"files in the same directory as this .jar with the name bot.txt");
+					botscript = "bot.keyReset();"; //AI goes here!
+					}
+    			System.out.println(botscript);
+    		}
     		
     		
     		frame = new keyFrame();
@@ -343,8 +371,8 @@ public class Main{
     		//nameresolved = true;
     		String randomName = "a";
     		int a = (int) (Math.random()*36);
-    		try{a = new Integer(args[1]).intValue();}catch(Exception butt){}
-	        try{new Main().setUp(args[0], a);}catch(Exception dumb){
+    		try{a = new Integer(args[2]).intValue();}catch(Exception butt){}
+	        try{new Main().setUp(args[1], a);}catch(Exception dumb){
 	        	
 	        while(!nameresolved){
         	if(a == 0) randomName = "Doge";

@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 public class keyFrame extends JFrame implements MouseListener, MouseMotionListener, KeyListener{
 	static boolean[] keys = new boolean[525];
 	boolean flag = true;
+	
+	
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
