@@ -1,8 +1,21 @@
 package pack;
 
 public class AI {//when applicable, all method arguments are in value, index order
-	int[] vars = new int[200];
-	boolean[] bools = new boolean[100];
+	public int[] vars = new int[200];
+	public boolean[] bools = new boolean[100];
+	public bullet[] bullets = new bullet[20];
+	public ether[] baddies = new ether[20];
+	public int w = 87;
+	public int a = 65;
+	public int s = 83;
+	public int d = 68;
+	public int up = 38;
+	public int left = 37;
+	public int down = 40;
+	public int right = 39;
+	public int shift = 16;
+	public int space = 32;
+	public int h = 72;
 	
 	public void keyReset(){
 		
@@ -103,6 +116,12 @@ public class AI {//when applicable, all method arguments are in value, index ord
 		public int culpretDir(){
 			return Main.bob.culpret.dir2;//direction of face
 		}
+		public boolean culpretMoved(int index){
+			if(Main.bob.culpret == null)return false;
+			if(Main.bob.culpret.x != Main.bob.culpret.X || 
+					Main.bob.culpret.y != Main.bob.culpret.Y) return true;
+			return false;
+		}
 		public int numberOfPlayers(){
 			return Main.others.size();
 		}
@@ -121,6 +140,12 @@ public class AI {//when applicable, all method arguments are in value, index ord
 			if(Main.bullets.size() == 0 || Main.bullets.size() < index)return -1;
 			return Main.bullets.get(index-1).z;
 		}
+		public boolean baddyMoved(int index){
+			if(Main.others.size() == 0 || Main.others.size() < index)return false;
+			if(Main.others.get(index).x != Main.others.get(index).X || 
+					Main.others.get(index).y != Main.others.get(index).Y) return true;
+			return false;
+		}
 		public int baddyX(int index){
 			if(Main.others.size() == 0 || Main.others.size() < index)return -1;
 			return Main.others.get(index-1).x;
@@ -135,6 +160,47 @@ public class AI {//when applicable, all method arguments are in value, index ord
 		}
 		public void quit(){
 			System.exit(0);
+		}
+		
+		public void storeBaddie(int i, int index){
+			try{baddies[index] = Main.others.get(i-1);}catch(Exception e){System.out.println("fail");}
+		}
+		public void storeBullets(int i, int index){
+			try{bullets[index] = Main.bullets.get(i);}catch(Exception e){}
+		}
+		public int storedBaddieX(int index){
+			if(baddies[index] != null)return baddies[index].x;
+			return -1;
+		}
+		public int storedBaddieY(int index){
+			if(baddies[index] != null)return baddies[index].Y;
+			return -1;
+		}
+		public int storedBaddieHealth(int index){
+			if(baddies[index] != null)return baddies[index].health;
+			return -1;
+		}
+		public int storedBaddieDir(int index){
+			if(baddies[index] != null)return baddies[index].dir2;
+			return -1;
+		}
+		public boolean storedBaddyMoved(int index){
+			if(baddies[index] == null)return false;
+			if(baddies[index].x != baddies[index].X || 
+					baddies[index].y != baddies[index].Y) return true;
+			return false;
+		}
+		public int storedBulletsX(int index){
+			if(bullets[index] != null)return bullets[index].x;
+			return -1;
+		}
+		public int storedBulletsY(int index){
+			if(bullets[index] != null)return bullets[index].y;
+			return -1;
+		}
+		public int storedBulletsDir(int index){
+			if(bullets[index] != null)return bullets[index].z;
+			return -1;
 		}
 	
 }
