@@ -1,7 +1,7 @@
 package pack;
 
 public class AI {//when applicable, all method arguments are in value, index order
-	int[] vars = new int[100];
+	int[] vars = new int[200];
 	boolean[] bools = new boolean[100];
 	
 	public void keyReset(){
@@ -17,7 +17,7 @@ public class AI {//when applicable, all method arguments are in value, index ord
 	}
 		
 		public void setVar(int a, int b){
-			if(b < 100){
+			if(b < 200){
 				vars[b] = a;
 			}
 		}
@@ -36,7 +36,7 @@ public class AI {//when applicable, all method arguments are in value, index ord
 		}
 		
 		public int getVar(int a){
-			if(a < 100){
+			if(a < 200){
 				return vars[a];
 			}
 			return 0;
@@ -70,6 +70,71 @@ public class AI {//when applicable, all method arguments are in value, index ord
 			
 		}
 		
-		
+		public int getX(){
+			return Main.bob.x;
+		}
+		public int getY(){
+			return Main.bob.y;
+		}
+		public int getHealth(){
+			return Main.bob.health;
+		}
+		public int getPower(){
+			return Main.bob.powerLevel;
+		}
+		public boolean canFire(){
+			return Main.bob.canFire;
+		}
+		public boolean died(){
+			return Main.bob.died;
+		}
+		public int culpretX(){
+			if(Main.bob.culpret == null)return -1;
+			return Main.bob.culpret.x;
+		}
+		public int culpretY(){
+			if(Main.bob.culpret == null)return -1;
+			return Main.bob.culpret.Y;
+		}
+		public int culpretHealth(){
+			if(Main.bob.culpret == null)return -1;
+			return Main.bob.culpret.health;
+		}
+		public int culpretDir(){
+			return Main.bob.culpret.dir2;//direction of face
+		}
+		public int numberOfPlayers(){
+			return Main.others.size();
+		}
+		public int numberOfBullets(){
+			return Main.bullets.size();
+		}
+		public int bulletX(int index){
+			if(Main.bullets.size() == 0 || Main.bullets.size() < index)return -1;
+			return Main.bullets.get(index-1).x;
+		}
+		public int bulletY(int index){
+			if(Main.bullets.size() == 0 || Main.bullets.size() < index)return -1;
+			return Main.bullets.get(index-1).y;
+		}
+		public int bulletDir(int index){
+			if(Main.bullets.size() == 0 || Main.bullets.size() < index)return -1;
+			return Main.bullets.get(index-1).z;
+		}
+		public int baddyX(int index){
+			if(Main.others.size() == 0 || Main.others.size() < index)return -1;
+			return Main.others.get(index-1).x;
+		}
+		public int baddyY(int index){
+			if(Main.others.size() == 0 || Main.others.size() < index)return -1;
+			return Main.others.get(index-1).y;
+		}
+		public int baddyHealth(int index){
+			if(Main.others.size() == 0 || Main.others.size() < index)return -1;
+			return Main.others.get(index-1).health;
+		}
+		public void quit(){
+			System.exit(0);
+		}
 	
 }

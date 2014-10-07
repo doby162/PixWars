@@ -15,6 +15,9 @@ public class input implements Runnable{
 	@Override
 	public void run() {
 		while(true){
+			
+			try{
+			
 			try{Thread.sleep(5);}catch(Exception e){}
 			try {
 				input = in.readLine();
@@ -51,7 +54,7 @@ public class input implements Runnable{
 				Main.others.add(f);
 				System.out.println("ether added: " + f.id);
 			}
-			
+		}catch(Exception e){System.out.println("*hic!*");}
 		}
 		
 	}
