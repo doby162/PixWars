@@ -327,7 +327,6 @@ public class Main{
     			System.out.println(botscript);
     		}
     		
-    		
     		frame = new keyFrame();
             frame.setTitle("PixWars V 2.0 (press 'm' to mute)");
             frame.setSize(1280, 720);
@@ -371,8 +370,6 @@ public class Main{
     		//nameresolved = true;
     		String randomName = "a";
     		int a = (int) (Math.random()*36);
-    		try{a = new Integer(args[2]).intValue();}catch(Exception butt){}
-	        try{new Main().setUp(args[1], a);}catch(Exception dumb){
 	        	
 	        while(!nameresolved){
         	if(a == 0) randomName = "Doge";
@@ -390,7 +387,7 @@ public class Main{
         	else if(a == 12) randomName = "Fat";
         	else if(a == 13) randomName = "CannonFodder";
         	else if(a == 14) randomName = "Rice";
-        	else if(a == 15) randomName = "Spinich";
+        	else if(a == 15) randomName = "Spinach";
         	
         	else if(a == 16) randomName = "Tesla";
         	else if(a == 17) randomName = "Gauss";
@@ -421,10 +418,6 @@ public class Main{
         	
 	        }System.out.println("entering battle as "+randomName);
 	        new Main().setUp(randomName, a);
-    		
-	        
-    	
-    	}
     	
     	
     	}

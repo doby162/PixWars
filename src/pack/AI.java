@@ -130,15 +130,15 @@ public class AI {//when applicable, all method arguments are in value, index ord
 		}
 		public int bulletX(int index){
 			if(Main.bullets.size() == 0 || Main.bullets.size() < index)return -1;
-			return Main.bullets.get(index-1).x;
+			return Main.bullets.get(index).x;
 		}
 		public int bulletY(int index){
 			if(Main.bullets.size() == 0 || Main.bullets.size() < index)return -1;
-			return Main.bullets.get(index-1).y;
+			return Main.bullets.get(index).y;
 		}
 		public int bulletDir(int index){
 			if(Main.bullets.size() == 0 || Main.bullets.size() < index)return -1;
-			return Main.bullets.get(index-1).z;
+			return Main.bullets.get(index).z;
 		}
 		public boolean baddyMoved(int index){
 			if(Main.others.size() == 0 || Main.others.size() < index)return false;
@@ -148,15 +148,15 @@ public class AI {//when applicable, all method arguments are in value, index ord
 		}
 		public int baddyX(int index){
 			if(Main.others.size() == 0 || Main.others.size() < index)return -1;
-			return Main.others.get(index-1).x;
+			return Main.others.get(index).x;
 		}
 		public int baddyY(int index){
 			if(Main.others.size() == 0 || Main.others.size() < index)return -1;
-			return Main.others.get(index-1).y;
+			return Main.others.get(index).y;
 		}
 		public int baddyHealth(int index){
 			if(Main.others.size() == 0 || Main.others.size() < index)return -1;
-			return Main.others.get(index-1).health;
+			return Main.others.get(index).health;
 		}
 		public void quit(){
 			System.exit(0);

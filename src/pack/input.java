@@ -1,5 +1,6 @@
 package pack;
 
+import java.awt.Frame;
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -19,8 +20,10 @@ public class input implements Runnable{
 			try{
 			
 			try{Thread.sleep(5);}catch(Exception e){}
+			
 			try {
 				input = in.readLine();
+				if(input == null){System.out.println("Game crashing"); System.exit(-1);}
 				if(input.contains(Main.name)){
 					String trap = null;
 					String[] tokens = input.split("~");
