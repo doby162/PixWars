@@ -27,7 +27,7 @@ public class input implements Runnable{
 				if(input.contains(Main.name)){
 					String trap = null;
 					String[] tokens = input.split("~");
-					try{trap = tokens[3];}catch(Exception thisIsActuallySuposedToHappen)
+					try{trap = tokens[3]; System.out.println(System.currentTimeMillis()-Main.pingydingy);}catch(Exception thisIsActuallySuposedToHappen)
 					//error indicates that the message is a short message, aka a damage message, and not ping
 					{Main.bob.health = Main.bob.health + new Integer(tokens[2]);}
 					//System.out.println(System.currentTimeMillis()-Main.ping);

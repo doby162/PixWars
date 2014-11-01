@@ -14,8 +14,45 @@ add collision DONE
 
 add name DONE
 
-Since "type" is going to transmit both bullets and damage, damage needs to override bullet fireing
-
 add server commands
 
 ad color choice at startup
+
+
+
+
+
+TODO 
+
+test pixwars over distance with new server setup with as many people as possible
+
+make game faster and more dynamic. Speed boosts, charge shots, 
+tweaked movement system, and possibly upgrades or powerups. KISS
+
+respawn, and possibly (maybe) better checks to prevent hacking DONE
+
+rebalenced to make stalemates less common. done
+
+Possibly add scoreing system
+
+get rid of the growth bug - DONE
+
+add sound effects
+
+add naming safeguard DONE
+
+server drops connections with more grace DONE
+
+add AI bots Done
+
+command line arguments to choose server
+
+documentation
+
+window glich patched
+
+
+
+atm you can do an undead shot
+
+

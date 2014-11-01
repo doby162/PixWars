@@ -22,6 +22,7 @@ public class Main{
 	input in;
 	static String IP = new String("107.196.11.5");
 	static double ping = 0;
+	static double pingydingy = 0;
 	
     static Image dd;
     static Image dl;
@@ -91,7 +92,8 @@ public class Main{
     		bob.move(frame);
     		if(frame.flag && !bob.died){
     			ping = System.currentTimeMillis();
-    			try{outputBuffer.println(bob.getStatus());
+    			try{pingydingy = System.currentTimeMillis();
+    				outputBuffer.println(bob.getStatus());
     	    		outputBuffer.flush();
     	    		frame.flag = false;
     	    		}catch(Exception e){System.out.println("Connection lost");failedConnection = true;}
